@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Conviction in the AI Era — BVP Atlas</title>
+
+  <!-- Sometype Mono — Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- marked.js — markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0A0A0A;
+      --cream:   #F4F1EB;
+      --text:    #1C1C1C;
+      --muted:   #888880;
+      --rule:    rgba(28, 28, 28, 0.12);
+      --font:    'Sometype Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 56px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* SWAP: hero image — replace the src attribute below with your image URL */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.32;
+      filter: grayscale(15%);
+      display: block;
+    }
+    /* SWAP END */
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,10,10,0.1)  0%,
+        rgba(10,10,10,0.45) 45%,
+        rgba(10,10,10,0.88) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+    }
+
+    .hero-eyebrow {
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(244,241,235,0.55);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 6vw, 5.2rem);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      margin-bottom: 36px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px 48px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(244,241,235,0.45);
+      border-top: 1px solid rgba(244,241,235,0.12);
+      padding-top: 24px;
+    }
+
+    .hero-meta-item strong {
+      display: block;
+      color: rgba(244,241,235,0.85);
+      margin-bottom: 3px;
+      font-weight: 500;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 30px;
+      right: 48px;
+      z-index: 1;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(244,241,235,0.3);
+      animation: float 2.4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0);   opacity: 0.3; }
+      50%       { transform: translateY(7px); opacity: 0.6; }
+    }
+
+    /* ══════════════════════════════════════
+       ARTICLE
+    ══════════════════════════════════════ */
+    .article {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 88px 32px 120px;
+    }
+
+    /* ── Scroll reveal base state ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition:
+        opacity  0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Typography ── */
+    .article h2 {
+      font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 64px;
+      margin-bottom: 20px;
+      padding-top: 52px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .article h2.first-heading {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .article h3 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 44px;
+      margin-bottom: 14px;
+    }
+
+    .article p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 22px;
+      color: #252520;
+    }
+
+    .article blockquote {
+      margin: 40px 0;
+      padding: 24px 28px;
+      border-left: 2.5px solid var(--black);
+      background: rgba(10,10,10,0.04);
+    }
+
+    .article blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.65;
+      margin-bottom: 0;
+      color: var(--text);
+    }
+
+    .article ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 28px;
+    }
+
+    .article li {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      padding: 10px 0 10px 22px;
+      border-bottom: 1px solid rgba(28,28,28,0.06);
+      position: relative;
+      color: #252520;
+    }
+
+    .article li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    .article hr {
+      border: none;
+      height: 1px;
+      background: var(--rule);
+      margin: 56px 0;
+    }
+
+    .article strong { font-weight: 600; color: var(--black); }
+    .article em     { font-style: italic; }
+    .article a      { color: var(--text); }
+
+    /* ── Image placeholders ── */
+    .img-placeholder {
+      width: 100%;
+      background: rgba(10,10,10,0.05);
+      border: 1px dashed rgba(10,10,10,0.14);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 52px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Empty placeholder keeps a fixed ratio */
+    .img-placeholder:not(:has(> img[src]:not([src=""]))) {
+      aspect-ratio: 16 / 9;
+    }
+
+    .img-placeholder img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .img-placeholder-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .img-placeholder-icon {
+      font-size: 22px;
+      opacity: 0.25;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--black);
+      color: var(--cream);
+      padding: 68px 48px 60px;
+    }
+
+    .footer-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .footer-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(244,241,235,0.35);
+      margin-bottom: 28px;
+    }
+
+    .footer-heading {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--cream);
+    }
+
+    .footer-sub {
+      font-size: 0.875rem;
+      color: rgba(244,241,235,0.5);
+      line-height: 1.75;
+      max-width: 460px;
+      margin-bottom: 44px;
+    }
+
+    .footer-authors {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(244,241,235,0.1);
+      padding-top: 32px;
+      margin-bottom: 44px;
+    }
+
+    .footer-author strong {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--cream);
+    }
+
+    .footer-author a {
+      font-size: 0.775rem;
+      color: rgba(244,241,235,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-author a:hover { color: var(--cream); }
+
+    .footer-source {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(244,241,235,0.2);
+      border-top: 1px solid rgba(244,241,235,0.07);
+      padding-top: 24px;
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .hero        { padding: 40px 24px; }
+      .scroll-cue  { right: 24px; }
+      .article     { padding: 64px 22px 80px; }
+      footer       { padding: 52px 24px 44px; }
+      .hero-meta   { flex-direction: column; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section class="hero">
+
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1 class="hero-title">Creative<br>Conviction<br>in the AI Era</h1>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <strong>Authors</strong>
+          Libbie Frost &amp; Rayouf Alhumedhi
+        </div>
+        <div class="hero-meta-item">
+          <strong>Contributors</strong>
+          Jeremy Levine &amp; Lauri Moore
+        </div>
+        <div class="hero-meta-item">
+          <strong>Published</strong>
+          February 24, 2026
+        </div>
+      </div>
+    </div>
+
+    <p class="scroll-cue">↓ scroll</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ARTICLE — injected by renderArticle()
+  ══════════════════════════════════════════ -->
+  <main class="article" id="article"></main>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="reveal">
+    <div class="footer-inner">
+      <p class="footer-heading">For builders in creative tooling</p>
+      <p class="footer-sub">
+        This is the first in a three-part series examining AI's impact on
+        product design, brand &amp; marketing, and consumer play.
+      </p>
+      <div class="footer-authors">
+        <div class="footer-author">
+          <strong>Libbie Frost</strong>
+          <a href="mailto:lfrost@bvp.com">lfrost@bvp.com</a>
+        </div>
+        <div class="footer-author">
+          <strong>Rayouf Alhumedhi</strong>
+          <a href="mailto:ralhumedhi@bvp.com">ralhumedhi@bvp.com</a>
+        </div>
+      </div>
+      <p class="footer-source">
+        Originally published on BVP Atlas &nbsp;·&nbsp; bvp.com/atlas
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ────────────────────────────────────────────────────────
+    // ARTICLE CONTENT
+    // Edit the markdown string below to update the article.
+    // Use <div class="img-placeholder" data-label="..."></div>
+    // wherever you want an image slot — then swap data-src in
+    // the rendered placeholder to point to your image file.
+    // ────────────────────────────────────────────────────────
+    const ARTICLE_MD = `
+In the late 80s and early 90s, graphic design went through an unprecedented shift. The introduction of desktop publishing tools, such as Aldus PageMaker for the Macintosh in 1985 and Adobe Illustrator (1987) and Photoshop (1990), collapsed the technical barriers to producing visual work. Tasks that once required specialized typesetters, print shops, and production expertise could suddenly be rendered by anyone with a computer. Conventional wisdom suggested designers would vanish. Instead, these tools lowered the barriers to creating visual content, which grew the market for designers.
+
+A decade later, marketing faced a similar inflection point with the rise of the internet and social media platforms in the 2000s. [Distribution](https://www.bvp.com/atlas/investor-field-notes-distribution-and-conversion-models-for-consumer-startups), once scarce and expensive to access through highly mature channels like television and print, became free and widely accessible as the Internet emerged as a new channel without large gatekeepers in its early days. This new channel created a need for new specialists. Content marketers emerged at early blogs and startups, while companies like Facebook and Dropbox pioneered the role of the growth marketer. The focus of marketing departments evolved from expensive ad spend to strategic brand narratives and content creation. The reduction in execution costs expanded the creative surface area rather than contracting it.
+
+The narrative dominating today's conversation around AI is largely one of subtraction, in which we fixate on code generation replacing junior engineers or on automation reducing back-office staff. While every major technological shift indeed rocks the existing org chart, history suggests disruption creates more than it destroys, and we think this pattern will be pronounced in creative disciplines. Just as desktop publishing created brand designers and the internet created new types of marketers, the AI era is already producing new creative roles and tooling that will influence how we work, innovate, and play for decades to come. When process and generation are commoditized, taste and judgment — or creative conviction — becomes vital.
+
+<div class="img-placeholder reveal" data-label="Hero editorial — creative conviction visual" data-src="cc v2.png"></div>
+
+## New dynamics for founders and creative teams
+
+The composition of founding teams is changing. We're seeing a surge of entrepreneurs with creative, non-technical backgrounds empowered by AI to write the code necessary to bring their startups to life. We've also noticed the urgency to hire "Founding Designers" across all types of AI startups. The job market also reflects this shift, with design openings climbing (up [13%](https://adplist.substack.com/p/state-of-the-design-job-market-in) from 2024). We're also seeing entirely new hybrid design roles emerging as well, from the rise of the "Design Engineer" that has become popularized by companies like Facebook, Vercel, and Netflix, to the "[Model Designer](https://www.aidesignfieldguide.com/)" being pioneered by creatives at Figma.
+
+For later-stage companies, we're noticing a pattern where CEOs are calling for a complete restructure of their design functions under C-suite leadership. At Shopify, [Tobi urgently called Carl Rivera](https://www.youtube.com/watch?v=qUoIfw5R-iE) in 2025 to revive and lead the design organization, while also simplifying titles to just "designer" or "writer" and re-focusing on craft and ambition. Stripe has adopted a similar approach, treating "design as design" by housing product, brand, marketing, creative, user research, and content all under one pillar and executive leader. Airbnb is another example — at [Config 2023](https://www.youtube.com/watch?v=Dkfijg7s76o), Brian Chesky told the audience that Airbnb had eliminated its product management function, with everything now running through design.
+
+In the future, we believe the role of the designer will look less like a discrete function and more like a foundational capability threaded through the entire company. The best designers will no longer sit downstream of product decisions; they will shape those decisions directly, moving at the speed of engineers while knowing when to slow things down. Designers who focus solely on the drawing board or shipping component libraries will be challenged by a new generation of designers who see the true form of the product, both present and future, and who tweak it across layers using storytelling, code, and imagery.
+
+Within organizations, we expect design to consolidate from a support function into a strategic one: fewer handoffs, more ownership, and a direct line to the CEO. The title may simplify, but the scope will expand. What gets called "design" tomorrow will encompass taste, narrative, product intuition, and brand in ways that blur every boundary we've drawn around the discipline today.
+
+## AI's impact on creative tooling
+
+The proliferation of new tooling has fundamentally expanded and augmented the bounds of creativity. We view the impact of AI on creative work in three distinct areas:
+
+- **Product design**: Tools like [Paper](http://paper.design), [Cursor](http://cursor.com), and [Dessn](http://dessn.ai) are allowing designers to prototype, ship code all the way through to production, and collapse the timelines between problem, idea, and reality. As we've previously noted, [the rise of design engineers is already underway](https://www.bvp.com/atlas/ai-powered-rd-vibecoding-taste-and-the-evolution-of-full-stack-design#3-AI-is-driving-the-rise-of-the-design-engineer-role), and there's an opportunity for founders to build tooling that demonstrates this function.
+
+- **Brand and visual marketing**: Platforms like [Canva](http://canva.com), [Flora](http://flora.ai), and [Reve](https://app.reve.com/) are modernizing horizontal creative workflows, enabling teams to generate high-fidelity assets from animations to interactive decks without the traditional bottlenecks. Every company has a brand, and those that can express it at scale without losing authenticity or coherence will outperform, which is exactly where we think the next wave of tooling matters most.
+
+- **Consumer play**: Platforms are emerging where the creation itself is the entertainment, not just a means to an end. Users build "gizmos" on [Gizmo](http://gizmo.party), generate songs on [Suno](http://suno.com), or have hour-long conversations with [Tolan](http://tolans.com) purely for the joy of making, sharing, or stepping into other worlds. These companies invest heavily in brand and narrative because the emotional promise to consumers is just as important as their technical capability. Successful consumer-facing companies realize that the product is a feeling as much as a feature set.
+
+<div class="img-placeholder reveal" data-label="AI creative tooling landscape — product, brand, consumer play" data-src="market map v2.png"></div>
+
+## Defining creative conviction
+
+Creative conviction combines two forces: the power and ambition to create something new and a firmly held belief in what you're creating. It's about standing for specificity, making opinionated choices, and designing for emotional connection. It's rooted in subjectivity and is difficult to teach — something AI doesn't handle well. As investors, we've honed our ability to identify this in entrepreneurs and companies. When we backed Pinterest in 2010, Ben Silbermann's and Evan Sharp's obsession with design was a primary reason we invested.
+
+It's also why other consumer internet winners (e.g., Airbnb, Shopify) pulled ahead despite operating in crowded markets. Airbnb's "Belong Anywhere" ethos wasn't just marketing; it was embedded in product decisions, such as lush photography that showcased homes as aspirational destinations, highlighting neighborhood guides and encouraging hosts to share local recommendations. Shopify made design choices that treated store owners as creators and fostered experiences like one-click checkout and mobile-first storefronts that made selling feel accessible and inspirational.
+
+We're already observing this pattern in the AI-native startups we back, too. [Legora](https://www.bvp.com/news/building-legoras-collaborative-ai-platform-for-legal-workflow-automation)'s customers assess which team ships innovations first and at the highest velocity, whose execution quality is superior, and which leadership team sees the future more creatively. When law firms evaluate legal AI platforms, they're not just comparing feature sets in today's products; they're betting on tomorrow's creative edge. What these [category-defining businesses](https://www.bvp.com/atlas/consumer-earthquake-startups) share is the ability to create visceral, emotional reactions; value propositions so stunning, they become etched into pop culture. As AI commoditizes execution, creative conviction commands a premium. It's hard to explain, impossible to fake, and that's exactly why it's valuable.
+
+This is just the beginning of our evolving thesis on an emerging creative tech stack. In that spirit, we'll be doing a three-part deep dive into product design, brand and marketing, and consumer play. We'll explore how the best teams are working, which tools actually matter, and why creative conviction remains an overlooked moat in a world where everyone has access to the same models.
+
+*This perspective was authored by Libbie Frost and Rayouf Alhumedhi, with reviews and edits from Partners Jeremy Levine and Lauri Moore, including Atlas Editors. If you are building in the creative tooling space, reach out directly to lfrost@bvp.com and ralhumedhi@bvp.com.*
+`;
+
+    // ────────────────────────────────────────────────────────
+    // RENDER ARTICLE
+    // Parses markdown → HTML, then upgrades img-placeholder
+    // divs with accessible markup and data-src attributes.
+    // ────────────────────────────────────────────────────────
+    function renderArticle() {
+      const container = document.getElementById('article');
+
+      // Parse markdown
+      const html = marked.parse(ARTICLE_MD);
+
+      // Inject into a temp node so we can traverse the DOM
+      const temp = document.createElement('div');
+      temp.innerHTML = html;
+
+      // No first-heading override needed — article opens with paragraphs
+      // so the first h2 naturally gets its top border and spacing.
+
+      // Upgrade img-placeholder divs
+      temp.querySelectorAll('.img-placeholder').forEach(el => {
+        const label = el.getAttribute('data-label') || 'image';
+        const src = el.getAttribute('data-src') || '';
+        const hasImage = src !== '';
+        el.innerHTML = hasImage
+          ? `<img src="${src}" alt="${label}" style="width:100%;height:100%;object-fit:contain;display:block;">`
+          : `
+            <!-- SWAP: ${label} -->
+            <img data-src="" src="" alt="${label}">
+            <!-- SWAP END -->
+            <span class="img-placeholder-icon">□</span>
+            <span class="img-placeholder-label">${label}</span>
+          `;
+      });
+
+      // Move all children into the real container and tag for reveal
+      Array.from(temp.children).forEach(el => {
+        if (!el.classList.contains('reveal')) {
+          el.classList.add('reveal');
+        }
+        container.appendChild(el);
+      });
+    }
+
+    // ────────────────────────────────────────────────────────
+    // SCROLL REVEAL — IntersectionObserver
+    // Elements enter at opacity 0 / translateY(26px) and
+    // transition to visible as they scroll into the viewport.
+    // Elements that enter together are staggered by 80ms each.
+    // ────────────────────────────────────────────────────────
+    function initReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        // Collect elements entering this tick
+        const entering = entries.filter(e => e.isIntersecting);
+
+        entering.forEach((entry, i) => {
+          const el = entry.target;
+          // Stagger elements that appear in the same observation batch
+          el.style.transitionDelay = `${i * 80}ms`;
+          el.classList.add('visible');
+          // Reset delay after transition so re-entry (if any) feels clean
+          el.addEventListener('transitionend', () => {
+            el.style.transitionDelay = '0ms';
+          }, { once: true });
+          observer.unobserve(el);
+        });
+      }, {
+        threshold: 0.07,
+        rootMargin: '0px 0px -36px 0px'
+      });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
+    // ────────────────────────────────────────────────────────
+    // INIT
+    // ────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      renderArticle();
+      initReveal();
+    });
+  </script>
+</body>
+</html>
